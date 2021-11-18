@@ -34,7 +34,7 @@ body {
   background-size: cover;
   background-position: top;
   position: relative;
-  clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%)
+  clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
 }
 
 .logo-box {
@@ -45,7 +45,6 @@ body {
 
 .logo {
   height: 35px;
- 
 }
 
 .text-box {
@@ -54,12 +53,16 @@ body {
   top: 40%;
   left: 50%;
   /* below this works because this is 50% of the element's height and width */
-  transform: translate(-50%, -50%)
+  transform: translate(-50%, -50%);
+  text-align: center;
 }
 
 .heading-primary {
   color: #fff;
   text-transform: uppercase;
+  /* below is to remove the "shake" where an element moved up after an animation */
+  backface-visibility: hidden;
+  margin-bottom: 60px;
 }
 
 .heading-primary-main {
@@ -67,6 +70,11 @@ body {
   font-size: 60px;
   font-weight: 400;
   letter-spacing: 35px;
+  animation-name: moveInLeft;
+  animation-duration: 3s;
+  animation-timing-function: cubic-bezier();
+  /* animation-iteration-count: 3; */
+  /* animation-delay: 3s */
 }
 
 .heading-primary-sub {
@@ -74,4 +82,110 @@ body {
   font-size: 20px;
   font-weight: 700;
   letter-spacing: 17.4px;
+  animation-name: moveInRight;
+  animation-duration: 3s;
+}
+
+@keyframes moveInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+
+  80% {
+    /* transform: translateX(10px) */
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes moveInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+
+  80% {
+    /* transform: translateX(-10px); */
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+/* :link is a state of the button selector */
+.btn:link,
+.btn:visited {
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 15px 40px;
+  display: inline-block;
+  /* this lives within text-box and is treated as text 
+  to center use text-align: center; in the parent text-box (see line 59) */
+  border-radius: 100px; /*a high number just makes rounded ends */
+  transition: all 0.2s ease-out; /* transition property always on the initial state */
+  position: relative;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.btn:active {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn-white {
+  background-color: #ffffff;
+  color: #777;
+}
+
+.btn::after {
+  content: "";
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+  /* treated like a child of the button so same dimensions */
+  border-radius: 100px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  transition: all 0.4s;
+}
+
+.btn-white::after {
+  background-color: white;
+}
+
+.btn:hover::after {
+  transform: scaleX(1.4) scale(1.6);
+  opacity: 0;
+}
+
+.btn-animated {
+  animation: moveInButton 0.5s ease-out 0.75s;
+  animation-fill-mode: backwards;
+}
+
+@keyframes moveInButton {
+  0% {
+    opacity: 0;
+    transform: translateY(500px);
+  }
+
+  80% {
+    /* transform: translateX(-10px); */
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
